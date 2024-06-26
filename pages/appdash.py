@@ -12,7 +12,6 @@ from streamlit_apexjs import st_apexcharts
 import numpy as np
 
 def connect_db():
-    '''
     firebase_key={
        "type" :os.environ["type"],
         "project_id":os.environ["project_id"],
@@ -25,9 +24,7 @@ def connect_db():
         "client_x509_cert_url":os.environ["client_x509_cert_url"],
         "universe_domain":os.environ["universe_domain"]
     }
-    '''
-    #cred = credentials.Certificate(firebase_key)
-    cred=credentials.Certificate("./ezit_key.json")
+    cred = credentials.Certificate(firebase_key)
     db = firestore.client()
     return db
 
@@ -63,7 +60,7 @@ def data_process(db,user_dict):
 def main():
     st.header("앱대쉬보드:fire:")
     password=st.text_input("Enter password:",type="password")
-    if password!="ezit1234":
+    if password!=os.environ["dbpassword"]:
         st.write("<span style='color:red'>**Invalid password**</span>", unsafe_allow_html=True)
         return
     else:
